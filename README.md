@@ -12,18 +12,14 @@ Plataforma web destinada a conectar doadores e receptores de recursos essenciais
 
 ### ✅ Implementadas
 
-1. **Autenticação de Usuários**
-   - Login e registro seguro
-   - Suporte para doadores e receptores
-   - Dados mockados
-
 ### 🚧 Em Desenvolvimento
 
-2. Cadastro de Itens para Doação
-3. Visualização de Itens Disponíveis
-4. Solicitação de Recursos
-5. Gerenciamento de Doações
-6. Controle de Requisições
+1. Autenticação de Usuários (mockado)
+2. Cadastro de Itens para Doação (mockado)
+3. Visualização de Itens Disponíveis (mockado)
+4. Solicitação de Recursos (mockado)
+5. Gerenciamento de Doações (mockado)
+6. Controle de Requisições (mockado)
 
 ## Instalação
 
