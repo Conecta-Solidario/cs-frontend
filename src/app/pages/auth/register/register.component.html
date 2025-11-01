@@ -1,0 +1,113 @@
+<div class="register-container">
+  <div class="card register-card">
+    <h1>Registrar-se</h1>
+    
+    @if (errorMessage) {
+      <div class="alert alert-error">{{ errorMessage }}</div>
+    }
+
+    @if (successMessage) {
+      <div class="alert alert-success">{{ successMessage }}</div>
+    }
+
+    <form (ngSubmit)="onSubmit()" #registerForm="ngForm">
+      <div class="form-group">
+        <label for="nome">Nome Completo</label>
+        <input
+          type="text"
+          id="nome"
+          name="nome"
+          [(ngModel)]="registerData.nome"
+          required
+          [disabled]="loading"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          [(ngModel)]="registerData.email"
+          required
+          [disabled]="loading"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="tipo">Tipo de Usuário</label>
+        <select
+          id="tipo"
+          name="tipo"
+          [(ngModel)]="registerData.tipo"
+          required
+          [disabled]="loading"
+        >
+          @for (option of tipoUsuarioOptions; track option.value) {
+            <option [value]="option.value">{{ option.label }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="telefone">Telefone (Opcional)</label>
+        <input
+          type="tel"
+          id="telefone"
+          name="telefone"
+          [(ngModel)]="registerData.telefone"
+          [disabled]="loading"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="endereco">Endereço (Opcional)</label>
+        <textarea
+          id="endereco"
+          name="endereco"
+          [(ngModel)]="registerData.endereco"
+          rows="3"
+          [disabled]="loading"
+        ></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="senha">Senha</label>
+        <input
+          type="password"
+          id="senha"
+          name="senha"
+          [(ngModel)]="registerData.senha"
+          required
+          minlength="6"
+          [disabled]="loading"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="confirmSenha">Confirmar Senha</label>
+        <input
+          type="password"
+          id="confirmSenha"
+          name="confirmSenha"
+          [(ngModel)]="confirmSenha"
+          required
+          [disabled]="loading"
+        />
+      </div>
+
+      <button
+        type="submit"
+        class="btn-primary"
+        [disabled]="loading || !registerForm.valid"
+      >
+        {{ loading ? 'Cadastrando...' : 'Cadastrar' }}
+      </button>
+    </form>
+
+    <div class="login-link">
+      <p>Já tem uma conta? <a routerLink="/login">Faça login aqui</a></p>
+    </div>
+  </div>
+</div>

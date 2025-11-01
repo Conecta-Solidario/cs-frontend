@@ -1,0 +1,51 @@
+<div class="home-container">
+  <div class="hero-section">
+    <h1>Bem-vindo ao Conecta Solidário</h1>
+    <p class="subtitle">Conectando doadores e receptores para um mundo mais solidário</p>
+  </div>
+
+  <div class="features-grid">
+    <div class="feature-card card">
+      <h2>Para Doadores</h2>
+      <p>Cadastre itens que você deseja doar e ajude famílias e ONGs em necessidade.</p>
+      @if (authService.isAuthenticated() && authService.isDoador()) {
+        <a routerLink="/itens/cadastrar" class="btn-primary">Cadastrar Item</a>
+      } @else if (!authService.isAuthenticated()) {
+        <a routerLink="/register" class="btn-primary">Registrar-se como Doador</a>
+      }
+    </div>
+
+    <div class="feature-card card">
+      <h2>Para Receptores</h2>
+      <p>Visualize itens disponíveis e solicite recursos para sua comunidade.</p>
+      @if (authService.isAuthenticated() && authService.isReceptor()) {
+        <a routerLink="/itens" class="btn-success">Ver Itens Disponíveis</a>
+      } @else if (!authService.isAuthenticated()) {
+        <a routerLink="/register" class="btn-success">Registrar-se como Receptor</a>
+      }
+    </div>
+
+    <div class="feature-card card">
+      <h2>Acompanhar</h2>
+      <p>Gerencie suas doações e solicitações em tempo real.</p>
+      @if (authService.isAuthenticated()) {
+        <div class="actions">
+          <a routerLink="/doacoes" class="btn-primary">Minhas Doações</a>
+          <a routerLink="/solicitacoes" class="btn-success">Minhas Solicitações</a>
+        </div>
+      } @else {
+        <a routerLink="/login" class="btn-primary">Fazer Login</a>
+      }
+    </div>
+  </div>
+
+  @if (!authService.isAuthenticated()) {
+    <div class="quick-actions">
+      <h2>Comece Agora</h2>
+      <div class="action-buttons">
+        <a routerLink="/register" class="btn-primary">Criar Conta</a>
+        <a routerLink="/login" class="btn-secondary">Fazer Login</a>
+      </div>
+    </div>
+  }
+</div>

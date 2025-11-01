@@ -1,0 +1,192 @@
+<div class="doacoes-list-container">
+  <div class="header-section">
+    <h1>Minhas Doações</h1>
+    <a routerLink="/itens/cadastrar" class="btn-primary">Cadastrar Novo Item</a>
+  </div>
+
+  @if (loading) {
+    <div class="loading">Carregando doações...</div>
+  }
+
+  @if (errorMessage) {
+    <div class="alert alert-error">{{ errorMessage }}</div>
+  }
+
+  @if (successMessage) {
+    <div class="alert alert-success">{{ successMessage }}</div>
+  }
+
+  @if (!loading && !errorMessage) {
+    <!-- Estatísticas -->
+    @if (itens.length > 0) {
+      <div class="card stats-card">
+        <h2>Estatísticas das Minhas Doações</h2>
+        <div class="stats-grid">
+          <div class="stat-item">
+            <div class="stat-value">{{ getEstatisticas().total }}</div>
+            <div class="stat-label">Total de Itens</div>
+          </div>
+          <div class="stat-item stat-disponivel">
+            <div class="stat-value">{{ getEstatisticas().disponiveis }}</div>
+            <div class="stat-label">Disponíveis</div>
+          </div>
+          <div class="stat-item stat-solicitado">
+            <div class="stat-value">{{ getEstatisticas().solicitados }}</div>
+            <div class="stat-label">Solicitados</div>
+          </div>
+          <div class="stat-item stat-reservado">
+            <div class="stat-value">{{ getEstatisticas().reservados }}</div>
+            <div class="stat-label">Reservados</div>
+          </div>
+          <div class="stat-item stat-entregue">
+            <div class="stat-value">{{ getEstatisticas().entregues }}</div>
+            <div class="stat-label">Entregues</div>
+          </div>
+        </div>
+      </div>
+    }
+
+    <!-- Filtros -->
+    <div class="card filters-card">
+      <h2>Filtros</h2>
+      <div class="filters">
+        <div class="form-group">
+          <label for="buscaTexto">Buscar</label>
+          <input
+            type="text"
+            id="buscaTexto"
+            [(ngModel)]="buscaTexto"
+            (input)="aplicarFiltros()"
+            placeholder="Nome ou descrição do item..."
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="filtroTipo">Tipo</label>
+          <select
+            id="filtroTipo"
+            [(ngModel)]="filtroTipo"
+            (change)="aplicarFiltros()"
+          >
+            @for (option of tipoItemOptions; track option.value) {
+              <option [value]="option.value">{{ option.label }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="filtroStatus">Status</label>
+          <select
+            id="filtroStatus"
+            [(ngModel)]="filtroStatus"
+            (change)="aplicarFiltros()"
+          >
+            @for (option of statusItemOptions; track option.value) {
+              <option [value]="option.value">{{ option.label }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="form-group">
+          <button type="button" class="btn-secondary" (click)="limparFiltros()">
+            Limpar Filtros
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Resultados -->
+    <div class="results-info">
+      <p>{{ filteredItens.length }} item(ns) encontrado(s)</p>
+    </div>
+
+    <!-- Lista de Itens -->
+    @if (filteredItens.length === 0) {
+      <div class="card empty-state">
+        <p>Nenhum item encontrado com os filtros selecionados.</p>
+        @if (itens.length === 0) {
+          <a routerLink="/itens/cadastrar" class="btn-primary">Cadastrar Primeiro Item</a>
+        }
+      </div>
+    } @else {
+      <div class="itens-grid">
+        @for (item of filteredItens; track item.id) {
+          <div class="card item-card">
+            <div class="item-header">
+              <h3>{{ item.nome }}</h3>
+              <span class="badge {{ getStatusClass(item.status) }}">
+                {{ getStatusLabel(item.status) }}
+              </span>
+            </div>
+
+            <div class="item-body">
+              <p class="item-descricao">{{ item.descricao }}</p>
+
+              <div class="item-details">
+                <div class="detail">
+                  <strong>Tipo:</strong> {{ getTipoItemLabel(item.tipo) }}
+                </div>
+                <div class="detail">
+                  <strong>Quantidade:</strong> {{ item.quantidade }}
+                </div>
+                <div class="detail">
+                  <strong>Estado:</strong> {{ getEstadoLabel(item.estadoConservacao) }}
+                </div>
+                <div class="detail">
+                  <strong>Cadastrado em:</strong> {{ formatarData(item.dataCadastro) }}
+                </div>
+              </div>
+
+              <!-- Informações da Solicitação -->
+              @for (solicitacao of [getSolicitacaoByItem(item.id)]; track solicitacao?.id) {
+                @if (solicitacao) {
+                  <div class="solicitacao-info">
+                    <h4>Solicitação Ativa</h4>
+                    <div class="solicitacao-details">
+                      <div class="detail">
+                        <strong>Receptor:</strong> {{ solicitacao.receptorNome }}
+                      </div>
+                      <div class="detail">
+                        <strong>Status:</strong> {{ solicitacao.status }}
+                      </div>
+                      <div class="detail">
+                        <strong>Motivo:</strong> {{ solicitacao.motivo }}
+                      </div>
+                      @if (solicitacao.receptorEndereco) {
+                        <div class="detail">
+                          <strong>Endereço:</strong> {{ solicitacao.receptorEndereco }}
+                        </div>
+                      }
+                      @if (solicitacao.receptorTelefone) {
+                        <div class="detail">
+                          <strong>Telefone:</strong> {{ solicitacao.receptorTelefone }}
+                        </div>
+                      }
+                      <div class="detail">
+                        <strong>Data da Solicitação:</strong> {{ formatarData(solicitacao.dataSolicitacao) }}
+                      </div>
+                    </div>
+                  </div>
+                }
+              }
+            </div>
+
+            <div class="item-footer">
+              <div class="item-actions">
+                @if (getSolicitacaoByItem(item.id)) {
+                  <a routerLink="/solicitacoes" class="btn-success">Ver Solicitação</a>
+                }
+                @if (podeEditar(item)) {
+                  <button class="btn-secondary" disabled>Editar</button>
+                }
+                @if (podeDeletar(item)) {
+                  <button class="btn-danger" (click)="deletarItem(item.id)">Excluir</button>
+                }
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  }
+</div>

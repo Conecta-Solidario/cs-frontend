@@ -1,0 +1,169 @@
+<div class="solicitacoes-list-container">
+  <div class="header-section">
+    <h1>
+      @if (authService.isReceptor()) {
+        Minhas Solicitações
+      } @else if (authService.isDoador()) {
+        Solicitações dos Meus Itens
+      } @else {
+        Solicitações
+      }
+    </h1>
+    @if (authService.isAuthenticated() && authService.isReceptor()) {
+      <a routerLink="/itens" class="btn-primary">Ver Itens Disponíveis</a>
+    }
+  </div>
+
+  @if (loading) {
+    <div class="loading">Carregando solicitações...</div>
+  }
+
+  @if (errorMessage) {
+    <div class="alert alert-error">{{ errorMessage }}</div>
+  }
+
+  @if (successMessage) {
+    <div class="alert alert-success">{{ successMessage }}</div>
+  }
+
+  @if (!loading && !errorMessage) {
+    <!-- Filtros -->
+    <div class="card filters-card">
+      <div class="filters">
+        <div class="form-group">
+          <label for="filtroStatus">Status</label>
+          <select
+            id="filtroStatus"
+            [(ngModel)]="filtroStatus"
+            (change)="aplicarFiltros()"
+          >
+            @for (option of statusOptions; track option.value) {
+              <option [value]="option.value">{{ option.label }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="form-group">
+          <button type="button" class="btn-secondary" (click)="limparFiltros()">
+            Limpar Filtros
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Resultados -->
+    <div class="results-info">
+      <p>{{ filteredSolicitacoes.length }} solicitação(ões) encontrada(s)</p>
+    </div>
+
+    <!-- Lista de Solicitações -->
+    @if (filteredSolicitacoes.length === 0) {
+      <div class="card empty-state">
+        <p>Nenhuma solicitação encontrada.</p>
+      </div>
+    } @else {
+      <div class="solicitacoes-grid">
+        @for (solicitacao of filteredSolicitacoes; track solicitacao.id) {
+          <div class="card solicitacao-card">
+            <div class="solicitacao-header">
+              <h3>{{ solicitacao.itemNome }}</h3>
+              <span class="badge {{ getStatusClass(solicitacao.status) }}">
+                {{ getStatusLabel(solicitacao.status) }}
+              </span>
+            </div>
+
+            <div class="solicitacao-body">
+              <div class="info-row">
+                <strong>Quantidade Solicitada:</strong>
+                <span>{{ solicitacao.quantidadeSolicitada }}</span>
+              </div>
+
+              <div class="info-row">
+                <strong>Motivo:</strong>
+                <span>{{ solicitacao.motivo }}</span>
+              </div>
+
+              @if (solicitacao.observacoes) {
+                <div class="info-row">
+                  <strong>Observações:</strong>
+                  <span>{{ solicitacao.observacoes }}</span>
+                </div>
+              }
+
+              <div class="info-row">
+                <strong>Data da Solicitação:</strong>
+                <span>{{ formatarData(solicitacao.dataSolicitacao) }}</span>
+              </div>
+
+              @if (solicitacao.dataResposta) {
+                <div class="info-row">
+                  <strong>Data da Resposta:</strong>
+                  <span>{{ formatarData(solicitacao.dataResposta!) }}</span>
+                </div>
+              }
+
+              @if (solicitacao.dataEntrega) {
+                <div class="info-row">
+                  <strong>Data da Entrega:</strong>
+                  <span>{{ formatarData(solicitacao.dataEntrega!) }}</span>
+                </div>
+              }
+
+              @if (authService.isDoador()) {
+                <div class="info-row">
+                  <strong>Receptor:</strong>
+                  <span>{{ solicitacao.receptorNome }}</span>
+                </div>
+                @if (solicitacao.receptorEndereco) {
+                  <div class="info-row">
+                    <strong>Endereço:</strong>
+                    <span>{{ solicitacao.receptorEndereco }}</span>
+                  </div>
+                }
+                @if (solicitacao.receptorTelefone) {
+                  <div class="info-row">
+                    <strong>Telefone:</strong>
+                    <span>{{ solicitacao.receptorTelefone }}</span>
+                  </div>
+                }
+              }
+
+              @if (authService.isReceptor()) {
+                <div class="info-row">
+                  <strong>Doador:</strong>
+                  <span>{{ solicitacao.doadorNome }}</span>
+                </div>
+              }
+            </div>
+
+            <div class="solicitacao-footer">
+              @if (podeCancelar(solicitacao)) {
+                <button class="btn-danger" (click)="cancelarSolicitacao(solicitacao.id)">
+                  Cancelar Solicitação
+                </button>
+              }
+
+              @if (podeAprovar(solicitacao)) {
+                <button class="btn-success" (click)="aprovarSolicitacao(solicitacao.id)">
+                  Aprovar
+                </button>
+              }
+
+              @if (podeRejeitar(solicitacao)) {
+                <button class="btn-danger" (click)="rejeitarSolicitacao(solicitacao.id)">
+                  Rejeitar
+                </button>
+              }
+
+              @if (podeMarcarEntregue(solicitacao)) {
+                <button class="btn-success" (click)="marcarEntregue(solicitacao.id)">
+                  Marcar como Entregue
+                </button>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    }
+  }
+</div>

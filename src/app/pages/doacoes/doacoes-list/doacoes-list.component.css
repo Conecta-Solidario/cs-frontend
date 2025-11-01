@@ -1,0 +1,265 @@
+.doacoes-list-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.header-section h1 {
+  color: #2c3e50;
+  margin: 0;
+}
+
+.header-section .btn-primary {
+  text-decoration: none;
+  display: inline-block;
+}
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+}
+
+.stats-card {
+  margin-bottom: 2rem;
+}
+
+.stats-card h2 {
+  margin-bottom: 1rem;
+  color: #2c3e50;
+  font-size: 1.2rem;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.stat-disponivel .stat-value {
+  color: #28a745;
+}
+
+.stat-solicitado .stat-value {
+  color: #ffc107;
+}
+
+.stat-reservado .stat-value {
+  color: #17a2b8;
+}
+
+.stat-entregue .stat-value {
+  color: #28a745;
+}
+
+.filters-card {
+  margin-bottom: 2rem;
+}
+
+.filters-card h2 {
+  margin-bottom: 1rem;
+  color: #2c3e50;
+  font-size: 1.2rem;
+}
+
+.filters {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  align-items: end;
+}
+
+.filters input,
+.filters select {
+  width: 100%;
+}
+
+.results-info {
+  margin-bottom: 1rem;
+  color: #666;
+}
+
+.itens-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1.5rem;
+}
+
+.item-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  margin-bottom: 1rem;
+}
+
+.item-header h3 {
+  margin: 0;
+  color: #2c3e50;
+  flex: 1;
+}
+
+.badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.badge-disponivel {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.badge-solicitado {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.badge-reservado {
+  background-color: #d1ecf1;
+  color: #0c5460;
+}
+
+.badge-entregue {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.badge-cancelado {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.badge-default {
+  background-color: #e2e3e5;
+  color: #383d41;
+}
+
+.item-body {
+  flex: 1;
+  margin-bottom: 1rem;
+}
+
+.item-descricao {
+  color: #666;
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.item-details {
+  display: grid;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.detail {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.detail strong {
+  color: #333;
+  margin-right: 0.5rem;
+}
+
+.solicitacao-info {
+  background-color: #f8f9fa;
+  padding: 1rem;
+  border-radius: 4px;
+  margin-top: 1rem;
+  border-left: 4px solid #4a90e2;
+}
+
+.solicitacao-info h4 {
+  margin: 0 0 0.75rem 0;
+  color: #2c3e50;
+  font-size: 1rem;
+}
+
+.solicitacao-details {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.item-footer {
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+}
+
+.item-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.item-actions a,
+.item-actions button {
+  flex: 1;
+  min-width: 100px;
+}
+
+.item-actions a {
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 3rem;
+  color: #666;
+}
+
+.empty-state .btn-primary {
+  margin-top: 1rem;
+  text-decoration: none;
+  display: inline-block;
+}
+
+@media (max-width: 768px) {
+  .filters {
+    grid-template-columns: 1fr;
+  }
+
+  .itens-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

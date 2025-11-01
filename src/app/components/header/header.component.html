@@ -1,0 +1,23 @@
+<header class="header">
+  <div class="header-container">
+    <div class="logo">
+      <a routerLink="/home">Conecta Solidário</a>
+    </div>
+    <nav class="nav">
+      <a routerLink="/home" routerLinkActive="active">Home</a>
+      <a routerLink="/itens" routerLinkActive="active">Itens Disponíveis</a>
+      @if (authService.isAuthenticated()) {
+        <a routerLink="/itens/cadastrar" routerLinkActive="active">Cadastrar Item</a>
+        <a routerLink="/solicitacoes" routerLinkActive="active">Minhas Solicitações</a>
+        <a routerLink="/doacoes" routerLinkActive="active">Minhas Doações</a>
+        <div class="user-info">
+          <span>{{ authService.getCurrentUser()?.nome }}</span>
+          <button class="btn-logout" (click)="authService.logout()">Sair</button>
+        </div>
+      } @else {
+        <a routerLink="/login" routerLinkActive="active">Login</a>
+        <a routerLink="/register" routerLinkActive="active">Registrar</a>
+      }
+    </nav>
+  </div>
+</header>

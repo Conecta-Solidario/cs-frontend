@@ -1,0 +1,171 @@
+.solicitacoes-list-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.header-section h1 {
+  color: #2c3e50;
+  margin: 0;
+}
+
+.header-section .btn-primary {
+  text-decoration: none;
+  display: inline-block;
+}
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+}
+
+.filters-card {
+  margin-bottom: 2rem;
+}
+
+.filters {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  align-items: end;
+}
+
+.filters select {
+  width: 100%;
+}
+
+.results-info {
+  margin-bottom: 1rem;
+  color: #666;
+}
+
+.solicitacoes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1.5rem;
+}
+
+.solicitacao-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.solicitacao-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  margin-bottom: 1rem;
+}
+
+.solicitacao-header h3 {
+  margin: 0;
+  color: #2c3e50;
+  flex: 1;
+}
+
+.badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.badge-pendente {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.badge-aprovada {
+  background-color: #d1ecf1;
+  color: #0c5460;
+}
+
+.badge-rejeitada {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.badge-entregue {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.badge-cancelada {
+  background-color: #e2e3e5;
+  color: #383d41;
+}
+
+.badge-default {
+  background-color: #e2e3e5;
+  color: #383d41;
+}
+
+.solicitacao-body {
+  flex: 1;
+  margin-bottom: 1rem;
+}
+
+.info-row {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #eee;
+}
+
+.info-row:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.info-row strong {
+  color: #333;
+  margin-bottom: 0.25rem;
+  font-size: 0.9rem;
+}
+
+.info-row span {
+  color: #666;
+  line-height: 1.6;
+}
+
+.solicitacao-footer {
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.solicitacao-footer button {
+  flex: 1;
+  min-width: 120px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 3rem;
+  color: #666;
+}
+
+@media (max-width: 768px) {
+  .solicitacoes-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .filters {
+    grid-template-columns: 1fr;
+  }
+}

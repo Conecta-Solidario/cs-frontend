@@ -1,0 +1,84 @@
+@if (visible) {
+  <div class="modal-overlay" (click)="closeModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2>Solicitar Item</h2>
+        <button class="close-btn" (click)="closeModal()" type="button">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        @if (item) {
+          <div class="item-info">
+            <h3>{{ item.nome }}</h3>
+            <p>{{ item.descricao }}</p>
+            <p><strong>Quantidade disponível:</strong> {{ item.quantidade }}</p>
+          </div>
+        }
+
+        @if (errorMessage) {
+          <div class="alert alert-error">{{ errorMessage }}</div>
+        }
+
+        <form (ngSubmit)="onSubmit()" #solicitacaoForm="ngForm">
+          <div class="form-group">
+            <label for="quantidadeSolicitada">Quantidade Solicitada *</label>
+            <input
+              type="number"
+              id="quantidadeSolicitada"
+              name="quantidadeSolicitada"
+              [(ngModel)]="solicitacaoData.quantidadeSolicitada"
+              required
+              min="1"
+              [max]="quantidadeMaxima"
+              [disabled]="loading"
+            />
+            <small>Máximo: {{ quantidadeMaxima }}</small>
+          </div>
+
+          <div class="form-group">
+            <label for="motivo">Motivo da Solicitação *</label>
+            <textarea
+              id="motivo"
+              name="motivo"
+              [(ngModel)]="solicitacaoData.motivo"
+              required
+              rows="4"
+              [disabled]="loading"
+              placeholder="Descreva o motivo da solicitação e para quem será destinado..."
+            ></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="observacoes">Observações (Opcional)</label>
+            <textarea
+              id="observacoes"
+              name="observacoes"
+              [(ngModel)]="solicitacaoData.observacoes"
+              rows="3"
+              [disabled]="loading"
+              placeholder="Informações adicionais sobre a solicitação..."
+            ></textarea>
+          </div>
+
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn-secondary"
+              (click)="closeModal()"
+              [disabled]="loading"
+            >
+              Cancelar
+            </button>
+            <button
+              type="submit"
+              class="btn-primary"
+              [disabled]="loading || !solicitacaoForm.valid"
+            >
+              {{ loading ? 'Enviando...' : 'Enviar Solicitação' }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+}

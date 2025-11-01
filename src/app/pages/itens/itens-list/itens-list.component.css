@@ -1,0 +1,165 @@
+.itens-list-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.header-section h1 {
+  color: #2c3e50;
+  margin: 0;
+}
+
+.header-section .btn-primary {
+  text-decoration: none;
+  display: inline-block;
+}
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+}
+
+.filters-card {
+  margin-bottom: 2rem;
+}
+
+.filters-card h2 {
+  margin-bottom: 1rem;
+  color: #2c3e50;
+  font-size: 1.2rem;
+}
+
+.filters {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  align-items: end;
+}
+
+.filters input,
+.filters select {
+  width: 100%;
+}
+
+.results-info {
+  margin-bottom: 1rem;
+  color: #666;
+}
+
+.itens-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.item-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  margin-bottom: 1rem;
+}
+
+.item-header h3 {
+  margin: 0;
+  color: #2c3e50;
+  flex: 1;
+}
+
+.badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.badge-disponivel {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.badge-solicitado {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.badge-reservado {
+  background-color: #d1ecf1;
+  color: #0c5460;
+}
+
+.badge-entregue {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.badge-cancelado {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.item-body {
+  flex: 1;
+  margin-bottom: 1rem;
+}
+
+.item-descricao {
+  color: #666;
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.item-details {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.detail {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.detail strong {
+  color: #333;
+  margin-right: 0.5rem;
+}
+
+.item-footer {
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+}
+
+.item-footer .btn-success {
+  width: 100%;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 3rem;
+  color: #666;
+}
+
+@media (max-width: 768px) {
+  .filters {
+    grid-template-columns: 1fr;
+  }
+
+  .itens-grid {
+    grid-template-columns: 1fr;
+  }
+}

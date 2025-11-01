@@ -1,0 +1,130 @@
+<div class="itens-list-container">
+  <div class="header-section">
+    <h1>Itens Disponíveis para Doação</h1>
+    @if (authService.isAuthenticated() && authService.isDoador()) {
+      <a routerLink="/itens/cadastrar" class="btn-primary">Cadastrar Novo Item</a>
+    }
+  </div>
+
+  @if (loading) {
+    <div class="loading">Carregando itens...</div>
+  }
+
+  @if (errorMessage) {
+    <div class="alert alert-error">{{ errorMessage }}</div>
+  }
+
+  @if (!loading && !errorMessage) {
+    <!-- Filtros -->
+    <div class="card filters-card">
+      <h2>Filtros</h2>
+      <div class="filters">
+        <div class="form-group">
+          <label for="buscaTexto">Buscar</label>
+          <input
+            type="text"
+            id="buscaTexto"
+            [(ngModel)]="buscaTexto"
+            (input)="aplicarFiltros()"
+            placeholder="Nome ou descrição do item..."
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="filtroTipo">Tipo</label>
+          <select
+            id="filtroTipo"
+            [(ngModel)]="filtroTipo"
+            (change)="aplicarFiltros()"
+          >
+            @for (option of tipoItemOptions; track option.value) {
+              <option [value]="option.value">{{ option.label }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="filtroEstado">Estado de Conservação</label>
+          <select
+            id="filtroEstado"
+            [(ngModel)]="filtroEstado"
+            (change)="aplicarFiltros()"
+          >
+            @for (option of estadoConservacaoOptions; track option.value) {
+              <option [value]="option.value">{{ option.label }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="form-group">
+          <button type="button" class="btn-secondary" (click)="limparFiltros()">
+            Limpar Filtros
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Resultados -->
+    <div class="results-info">
+      <p>
+        {{ filteredItens.length }} item(ns) encontrado(s)
+      </p>
+    </div>
+
+    <!-- Lista de Itens -->
+    @if (filteredItens.length === 0) {
+      <div class="card empty-state">
+        <p>Nenhum item encontrado com os filtros selecionados.</p>
+      </div>
+    } @else {
+      <div class="itens-grid">
+        @for (item of filteredItens; track item.id) {
+          <div class="card item-card">
+            <div class="item-header">
+              <h3>{{ item.nome }}</h3>
+              <span class="badge badge-{{ item.status.toLowerCase() }}">
+                {{ getStatusLabel(item.status) }}
+              </span>
+            </div>
+
+            <div class="item-body">
+              <p class="item-descricao">{{ item.descricao }}</p>
+
+              <div class="item-details">
+                <div class="detail">
+                  <strong>Tipo:</strong> {{ getTipoItemLabel(item.tipo) }}
+                </div>
+                <div class="detail">
+                  <strong>Quantidade:</strong> {{ item.quantidade }}
+                </div>
+                <div class="detail">
+                  <strong>Estado:</strong> {{ getEstadoLabel(item.estadoConservacao) }}
+                </div>
+                <div class="detail">
+                  <strong>Doador:</strong> {{ item.doadorNome }}
+                </div>
+                <div class="detail">
+                  <strong>Cadastrado em:</strong> {{ formatarData(item.dataCadastro) }}
+                </div>
+              </div>
+            </div>
+
+            <div class="item-footer">
+              @if (authService.isAuthenticated() && authService.isReceptor() && item.status === 'DISPONIVEL') {
+                <button class="btn-success" (click)="abrirModalSolicitacao(item)">Solicitar Item</button>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    }
+  }
+
+  <!-- Modal de Solicitação -->
+  <app-solicitar-item-modal
+    [item]="selectedItem"
+    [visible]="modalVisible"
+    (close)="fecharModal()"
+    (success)="onSolicitacaoSuccess()"
+  ></app-solicitar-item-modal>
+</div>
